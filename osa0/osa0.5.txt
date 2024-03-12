@@ -1,0 +1,42 @@
+sequenceDiagram
+    participant browser
+    participant server
+    
+    Note right of browser: User visits the SPA
+    
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/
+    activate server
+    server-->>browser: SPA Shell (HTML, CSS, JS)
+    deactivate server
+    
+    Note right of browser: Browser parses HTML, CSS, and JS
+    
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.css
+    activate server
+    server-->>browser: CSS file
+    deactivate server
+    
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.js
+    activate server
+    server-->>browser: JS file
+    deactivate server
+    
+    Note right of browser: SPA is initialized and JavaScript runtime starts
+    
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
+    activate server
+    server-->>browser: Initial data (JSON)
+    deactivate server    
+    
+    Note right of browser: Browser processes JSON and updates the view dynamically without reloading
+    
+    loop User Interaction with SPA
+        Note right of browser: User performs actions (e.g., adds a new note)
+        
+        browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note
+        activate server
+        server-->>browser: Confirmation (New note added)
+        deactivate server
+        
+        Note right of browser: SPA updates the view with the new note dynamically
+    end
