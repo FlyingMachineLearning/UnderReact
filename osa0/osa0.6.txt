@@ -1,0 +1,28 @@
+sequenceDiagram
+    participant browser
+    participant server
+    participant DOM
+
+    Note right of browser: Page initially loads
+
+    browser->>server: GET /exampleapp/data.json (on page load)
+    activate server
+    Note over server: Server fetches note data
+    server-->>browser: JSON data [{ "content": "Note 1", "date": "2023-1-1" }, ...]
+    deactivate server
+
+    Note right of browser: Browser updates the 'notes' array and calls 'redrawNotes'
+    browser->>DOM: Update DOM with new notes
+
+    Note right of browser: User submits a new note
+
+    browser->>DOM: Add note to 'notes' array and update DOM
+    DOM-->>browser: DOM updated
+
+    browser->>server: POST /exampleapp/new_note_spa (sendToServer function)
+    activate server
+    Note over server: Server processes new note
+    server-->>browser: Response (note saved)
+    deactivate server
+
+    Note right of browser: Response logged to console
