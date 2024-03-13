@@ -1,0 +1,42 @@
+/*1.4: course information step4
+Next, we put the objects in the table, i.e. change the variable definitions of App to the following form and change all parts of the application accordingly:
+*/
+const App = () => {
+  const course = 'Half Stack application development'
+  const parts = [
+    {
+      name: 'Fundamentals of React',
+      exercises: 10
+    },
+    {
+      name: 'Using props to pass data',
+      exercises: 7
+    },
+    {
+      name: 'State of a component',
+      exercises: 14
+    }
+  ]
+
+  return (
+    <div>
+      ...
+    </div>
+  )
+}
+/*copy
+NOTE: at this stage you can assume that the table always has three elements , i.e. it is not necessary to go through the table with a loop. We will come back to the rendering of components based on the objects in the table later in the next part of the course .
+
+However, do not pass the different objects from the component App to the components Content and Total contained in it as separate props, but directly as a table:
+*/
+const App = () => {
+  // const-määrittelyt
+
+  return (
+    <div>
+      <Header course={...} />
+      <Content parts={parts} />
+      <Total parts={parts} />
+    </div>
+  )
+}
