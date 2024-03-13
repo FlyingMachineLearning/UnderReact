@@ -1,0 +1,18 @@
+Initial State:
+As a user, I see an empty pie chart (circle) on the screen.
+As a user, I have a dropdown to select a number (1-8) for the number of participants.
+As a user, I see "Start," "Pause," and "Reset" buttons. The "Start" and "Pause" buttons are initially disabled.
+State 1 - Name Input:
+Upon selecting a number, corresponding input fields for names appear, equal to the selected number. If a larger number is selected, additional blank fields appear; if a smaller number is chosen, excess fields are removed.
+Each name field is limited to 20 characters, accepting alphabetic characters only, and defaults to "Person n" (where n is the field number).
+Name fields are displayed in different colors based on a default palette (red, orange, yellow, green, indigo, blue, violet, gray) to match the future pie chart slices.
+The "Reset" button returns the app to the initial state, clearing all input fields and selections.
+State 2 - Time Collection and Arc Reflection:
+With names entered, the "Start" button is enabled. Clicking "Start" begins the timer for the first name on the list, filling the pie chart with a slice in their color. The "Start" button then becomes disabled to prevent multiple starts.
+Clicking a different name continues the timer from where it left off, filling the pie chart with their color. Inactive names are shown in muted hues to indicate they are not currently being timed.
+The "Pause" button stops the timer. Clicking "Start" again resumes the timer from where it was paused.
+The "Reset" button, when clicked during an active session, prompts the user for confirmation before resetting to prevent accidental data loss.
+Completion State:
+When the pie chart is completely filled, all names return to their original hues. The "Start" and "Pause" buttons are disabled (grayed out), and a message "Pie's Full!" appears at the bottom.
+At this point, only the "Reset" button is functional, allowing the user to start a new session from the initial state.
+This user story outline takes into account dynamic input field adjustments, input validations, default naming, session control, visual cues for active/inactive states, completion state handling, and a safety prompt for session resets. It aims to cover a thorough and intuitive user experience for the pie chart timer application.
