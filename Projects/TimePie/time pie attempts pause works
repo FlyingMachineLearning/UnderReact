@@ -1,0 +1,183 @@
+import React, { useState, useEffect } from 'react';
+import './App.css';
+
+const App = () => {
+  const [isActive, setIsActive] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(10); // 10 seconds for testing
+  const [timer, setTimer] = useState(null);
+
+  useEffect(() => {
+    if (isActive && timeLeft > 0) {
+      const id = setInterval(() => {
+        setTimeLeft((timeLeft) => timeLeft - 0.01);
+      }, 10);
+      setTimer(id);
+    } else if (!isActive && timer) {
+      clearInterval(timer);
+    }
+    return () => clearInterval(timer);
+  }, [isActive, timer]);
+
+  const handleButtonClick = () => {
+    setIsActive(!isActive);
+  };
+
+  return (
+    <div className="App">
+      <svg className="pie" viewBox="-1 -1 2 2">
+        <path d={describeArc(0, 0, 1, 0, (timeLeft / 10) * 360)} fill="lightblue" />
+      </svg>
+      <button onClick={handleButtonClick}>{isActive ? 'Pause' : 'Start'}</button>
+      <div>{timeLeft <= 0 ? "Pie's done!" : `Time left: ${timeLeft.toFixed(2)}`}</div>
+    </div>
+  );
+};
+
+// Helper function to describe an arc for the SVG path
+function polarToCartesian(centerX, centerY, radius, angleInDegrees) {
+  var angleInRadians = ((angleInDegrees - 90) * Math.PI) / 180.0;
+  return {
+    x: centerX + radius * Math.cos(angleInRadians),
+    y: centerY + radius * Math.sin(angleInRadians),
+  };
+}
+
+function describeArc(x, y, radius, startAngle, endAngle) {
+  var start = polarToCartesian(x, y, radius, endAngle);
+  var end = polarToCartesian(x, y, radius, startAngle);
+  var largeArcFlag = endAngle - startAngle <= 180 ? '0' : '1';
+  var d = [
+    'M',
+    start.x,
+    start.y,
+    'A',
+    radius,
+    radius,
+    0,
+    largeArcFlag,
+    0,
+    end.x,
+    end.y,
+  ].join(' ');
+  return d;
+}
+
+export default App;
+
+
+/*import React, { useState, useEffect } from 'react';
+import './App.css';
+
+const participants = ['Alice', 'Bob', 'Charlie'];
+const colors = ['red', 'green', 'blue'];
+
+const App = () => {
+  const [segments, setSegments] = useState([]);
+  const [totalTime, setTotalTime] = useState(10); // 10 seconds for testing
+  const [activeParticipantIndex, setActiveParticipantIndex] = useState(null);
+  const [timer, setTimer] = useState(null);
+
+  useEffect(() => {
+    return () => timer && clearInterval(timer);
+  }, [timer]);
+
+  const drawPieSegments = () => {
+    let startAngle = 0;
+    return segments.map((segment, index) => {
+      const radius = 1; // SVG viewbox is from -1 to 1
+      const endAngle = startAngle + (segment.time / totalTime) * 360;
+      const largeArcFlag = segment.time > totalTime / 2 ? 1 : 0;
+      const startX = radius * Math.cos(Math.PI * startAngle / 180);
+      const startY = radius * Math.sin(Math.PI * startAngle / 180);
+      const endX = radius * Math.cos(Math.PI * endAngle / 180);
+      const endY = radius * Math.sin(Math.PI * endAngle / 180);
+      startAngle = endAngle; // Update for the next segment
+
+      const pathData = [
+        `M 0 0`, // Move to center
+        `L ${startX} ${startY}`, // Line to start of arc
+        `A ${radius} ${radius} 0 ${largeArcFlag} 1 ${endX} ${endY}`, // Arc to end of segment
+        `Z` // Close path
+      ].join(' ');
+
+      return <path key={index} d={pathData} fill={colors[index % colors.length]} />;
+    });
+  };
+
+  const handleParticipantClick = (index) => {
+  if (activeParticipantIndex === index && timer) {
+    clearInterval(timer);
+    setTimer(null);
+    setActiveParticipantIndex(null); // Clear active participant to allow for pause functionality
+    return;
+  }
+
+  setActiveParticipantIndex(index); // Set new active participant
+
+  if (timer) clearInterval(timer); // Clear existing timer if running
+
+  const newTimer = setInterval(() => {
+    setTotalTime((prevTime) => {
+      const newTime = prevTime - 0.01; // Decrement totalTime by 0.01s on each interval
+      if (newTime <= 0) {
+        clearInterval(newTimer); // Stop timer if time runs out
+        return 0;
+      }
+      return newTime;
+    });
+
+    setSegments((prevSegments) => {
+      const totalSegmentTime = prevSegments.reduce((acc, curr) => acc + curr.time, 0);
+      if (totalSegmentTime >= 10) { // Ensure total segment time doesn't exceed total duration
+        clearInterval(newTimer);
+        return prevSegments;
+      }
+
+      const updatedSegments = [...prevSegments];
+      if (updatedSegments[index]) {
+        updatedSegments[index].time += 0.01; // Increment time for active segment
+      } else {
+        updatedSegments[index] = { time: 0.01, participant: participants[index] };
+      }
+      return updatedSegments;
+    });
+  }, 10); // Interval set to 10ms
+
+  setTimer(newTimer);
+};
+
+  const handleReset = () => {
+    if (timer) clearInterval(timer);
+    setSegments([]);
+    setTotalTime(10); // Reset to 10 seconds for testing
+    setActiveParticipantIndex(null);
+    setTimer(null);
+  };
+
+  return (
+    <div className="App">
+      <svg className="pie-chart" viewBox="-1 -1 2 2" style={{ transform: 'rotate(-90deg)' }}>
+        {drawPieSegments()}
+      </svg>
+      <div className="timer-display">
+        Time Left: {totalTime.toFixed(2)}s
+      </div>
+      <div className="participants">
+        {participants.map((participant, index) => (
+          <button
+            key={index}
+            style={{ backgroundColor: colors[index % colors.length], color: 'white' }}
+            onClick={() => handleParticipantClick(index)}
+          >
+            {participant}
+          </button>
+        ))}
+      </div>
+      <button className="reset-button" onClick={handleReset}>Reset</button>
+    </div>
+  );
+};
+
+export default App;
+
+*/
