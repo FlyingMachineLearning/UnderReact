@@ -1,0 +1,32 @@
+The spread syntax (...) is used to expand iterable elements (like arrays) or object properties into a new array or object. When used with objects, as in your example, it copies the properties of an existing object into a new object.
+
+How It Works in Your Functions
+In handleLeftClick:
+
+javascript
+Copy code
+const newClicks = { 
+  ...clicks, 
+  left: clicks.left + 1 
+}
+This creates a new object newClicks by doing the following:
+
+...clicks: Takes all the properties and their current values from the clicks state object and copies them into the newClicks object.
+left: clicks.left + 1: Sets (or updates) the left property of the newClicks object to be one more than its current value in clicks. If there was a left property already copied over by ...clicks, this line would overwrite that left value with the new one.
+In handleRightClick:
+
+javascript
+Copy code
+const newClicks = { 
+  ...clicks, 
+  right: clicks.right + 1 
+}
+Similar to handleLeftClick, but for the right property. It:
+
+Copies all properties from clicks.
+Updates the right property to be one more than its current value.
+Benefits
+Immutability: This approach respects the immutability of the state by creating a new object rather than modifying the existing state directly.
+Simplicity: It's more concise and easier to read. You don't need to manually specify properties that aren't changing, reducing the risk of bugs.
+Maintainability: If the state object clicks gains more properties in the future, you won't need to modify these functions to include the new properties, as they're automatically copied over by the spread syntax.
+This method is a common and recommended approach for updating state objects in React, especially when you want to change only a part of the state while keeping the rest unchanged.
