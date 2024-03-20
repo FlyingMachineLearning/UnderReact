@@ -5,7 +5,11 @@ import PersonForm from './PersonForm';
 import Persons from './Persons';
 
 const App = () => {
-  // State and handlers remain the same
+    const [persons, setPersons] = useState([]);
+  const [newName, setNewName] = useState('');
+  const [newNumber, setNewNumber] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
+
 
   useEffect(() => {
     personsService
@@ -15,9 +19,25 @@ const App = () => {
       });
   }, []);
 
-  const addPerson = (event) => {
-    event.preventDefault();
-    // Validation logic remains the same
+const handleNameChange = (event) => {
+    setNewName(event.target.value);
+  };
+
+  const handleNumberChange = (event) => {
+    setNewNumber(event.target.value);
+  };
+
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+const addPerson = (event) => {
+  event.preventDefault();
+  if (persons.some(person => person.name.toLowerCase() === newName.toLowerCase())) {
+    window.alert(`${newName} is already added to phonebook`);
+    return;
+  }
+
 
     const personObject = { name: newName, number: newNumber };
 
@@ -30,7 +50,20 @@ const App = () => {
       });
   };
 
-  // UI rendering remains the same
+    return (
+    <div>
+      {/* The rest of your component */}
+      <Filter searchTerm={searchTerm} handleSearchChange={handleSearchChange} />
+      <PersonForm
+        addPerson={addPerson}
+        newName={newName}
+        handleNameChange={handleNameChange}
+        newNumber={newNumber}
+        handleNumberChange={handleNumberChange}
+      />
+      <Persons personsToShow={personsToShow} />
+    </div>
+  );
 };
 
 export default App;
