@@ -77,6 +77,15 @@ const deletePerson = (id, name) => {
         handleNumberChange={handleNumberChange}
       />
       <Persons personsToShow={personsToShow} />
+
+        <div>
+  {personsToShow.map(person =>
+    <div key={person.id}>
+      {person.name} {person.number}
+      <button onClick={() => deletePerson(person.id, person.name)}>delete</button>
+    </div>
+  )}
+</div>
     </div>
   );
 };
