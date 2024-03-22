@@ -1,17 +1,23 @@
-
-
-
 // services/persons.js
 import axios from 'axios';
 
 const baseUrl = 'http://localhost:3000/persons'; // Adjust this to your server's address
 
-// Existing functions (getAll, create) remain unchanged
+const getAll = () => {
+  const request = axios.get(baseUrl);
+  return request.then(response => response.data);
+};
+
+const create = newObject => {
+  const request = axios.post(baseUrl, newObject);
+  return request.then(response => response.data);
+};
 
 const remove = id => {
   const request = axios.delete(`${baseUrl}/${id}`);
   return request.then(response => response.data);
 };
 
-// Update the export to include the new remove function
+
+// Export functions for use in other parts of the application
 export default { getAll, create, remove };
