@@ -1,0 +1,3 @@
+Note
+
+It is advisable not to mix the useEffect and useMemo hooks to ensure clarity and avoid confusion. The key distinction lies in their respective purposes: useEffect is employed for managing side effects and component lifecycle, whereas useMemo memoizes costly computations to enhance performance.
