@@ -19,6 +19,8 @@ const App = () => {
       });
   }, []);
 
+
+    
 const handleNameChange = (event) => {
     setNewName(event.target.value);
   };
@@ -49,7 +51,20 @@ const addPerson = (event) => {
         setNewNumber('');
       });
   };
+const deletePerson = (id, name) => {
+  const isConfirmed = window.confirm(`Delete ${name}?`);
 
+  if (isConfirmed) {
+    personsService.remove(id)
+      .then(() => {
+        setPersons(persons.filter(person => person.id !== id));
+      })
+      .catch(error => {
+        alert(`The person '${name}' was already deleted from server`);
+        setPersons(persons.filter(person => person.id !== id));
+      });
+  }
+};
     return (
     <div>
       {/* The rest of your component */}
