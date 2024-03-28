@@ -1,1 +1,24 @@
 
+Flask is a popular, lightweight WSGI web application framework in Python. It's designed to make getting started quick and easy, with the ability to scale up to complex applications. Here are some of the fundamental concepts of Flask:
+
+WSGI: Flask is based on the WSGI (Web Server Gateway Interface) specification, which is a standard interface between web server software and web applications written in Python. This makes Flask applications compatible with a wide variety of web servers.
+
+Routing: In Flask, routing is the process of mapping URLs to specific functions in your code. This allows you to easily design your application's URL structure and connect different parts of your application to those URLs.
+
+Views and Endpoints: A view function in Flask is what responds to requests to your application. Flask uses patterns to match the incoming request URL to the view that should handle it, which are referred to as endpoints.
+
+Templates: Flask uses the Jinja2 template engine to allow for dynamic generation of HTML from templates. Templates are files that contain static data as well as placeholders for dynamic data that your application can pass in and render at runtime.
+
+Web Forms: Flask supports web forms through extensions like Flask-WTF, allowing for easy handling of form data for submissions and validations.
+
+Request and Response Objects: Flask provides request and response objects to manage HTTP requests and responses. The request object contains all the information that the client (like a web browser) has sent to your application, while the response object is what your application sends back to the client.
+
+Sessions and Cookies: Flask provides built-in support for managing user sessions, which allows you to store information specific to a user from one request to the next. This is often used for things like keeping a user logged in as they navigate through your application.
+
+Blueprints: Blueprints are a way to organize your Flask application into smaller and reusable components. They can be used to add URL rules, templates, and other elements to an application, and they can be registered on an application even if they are defined in a separate module.
+
+Extensions: Flask has a lightweight and modular design, which makes it easily extendable with a wide variety of extensions that add additional functionality to your application, such as ORM (Object-Relational Mapping), form handling, authentication, and more.
+
+Development Server and Debugger: Flask comes with a built-in development server and an interactive debugger, making it easy to develop and debug your application locally.
+
+These concepts provide the foundation upon which Flask applications are built, from simple web pages to complex web applications.
