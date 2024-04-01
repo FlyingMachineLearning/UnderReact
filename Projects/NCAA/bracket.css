@@ -1,0 +1,23 @@
+.bracket {
+  display: flex;
+  justify-content: center;
+  align-items: start;
+}
+
+.round {
+  display: flex;
+  flex-direction: column;
+  margin-right: 20px; /* Spacing between rounds */
+}
+
+.game {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px; /* Spacing between games */
+}
+
+.team {
+  border: 1px solid #ccc;
+  padding: 5px;
+  text-align: center;
+}
