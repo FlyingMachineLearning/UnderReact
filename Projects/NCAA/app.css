@@ -1,0 +1,24 @@
+.app {
+  text-align: center;
+}
+
+.round {
+  display: inline-flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.game {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.team {
+  padding: 5px;
+  border-bottom: 1px solid #eee;
+}
+
+.team:last-child {
+  border-bottom: none;
+}
