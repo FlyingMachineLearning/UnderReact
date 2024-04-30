@@ -1,0 +1,100 @@
+import React, { useState, useEffect, useRef } from 'react';
+import { ForceGraph2D } from 'react-force-graph';
+
+const GraphComponent = () => {
+    const fgRef = useRef();
+    const [hoverNode, setHoverNode] = useState(null);
+    const [nodes, setNodes] = useState([
+    const data = {
+        nodes: [
+            { id: 'Alice', name: 'Alice', color: '#f00' },
+            { id: 'Bob', name: 'Bob' },
+            { id: 'Carol', name: 'Carol' },
+            { id: 'Dave', name: 'Dave' },
+            { id: 'Eve', name: 'Eve' },
+            { id: 'Frank', name: 'Frank' },
+            { id: 'Gina', name: 'Gina' },
+            { id: 'Hank', name: 'Hank' },
+            { id: 'Ivy', name: 'Ivy' },
+            { id: 'Jack', name: 'Jack' },
+            { id: 'Karen', name: 'Karen' },
+            { id: 'Lewis', name: 'Lewis' },
+            { id: 'Mona', name: 'Mona' },
+            { id: 'Nick', name: 'Nick' },
+            { id: 'Olive', name: 'Olive' },
+            { id: 'Peter', name: 'Peter' },
+            { id: 'Quincy', name: 'Quincy' },
+            { id: 'Rachel', name: 'Rachel' },
+            { id: 'Steve', name: 'Steve' },
+{ id: 'Tina', name: 'Tina' },
+{ id: 'Uma', name: 'Uma' },
+{ id: 'Vince', name: 'Vince' },
+{ id: 'Wanda', name: 'Wanda' },
+{ id: 'Xander', name: 'Xander' },
+{ id: 'Yara', name: 'Yara' },
+{ id: 'Zach', name: 'Zach' },
+        ],
+        links: [
+            { source: 'Alice', target: 'Bob' },
+{ source: 'Bob', target: 'Carol' },
+{ source: 'Carol', target: 'Dave' },
+{ source: 'Dave', target: 'Eve' },
+{ source: 'Eve', target: 'Frank' },
+{ source: 'Frank', target: 'Gina' },
+{ source: 'Gina', target: 'Hank' },
+{ source: 'Hank', target: 'Ivy' },
+{ source: 'Ivy', target: 'Jack' },
+{ source: 'Jack', target: 'Karen' },
+{ source: 'Karen', target: 'Lewis' },
+{ source: 'Lewis', target: 'Mona' },
+{ source: 'Mona', target: 'Nick' },
+{ source: 'Nick', target: 'Olive' },
+{ source: 'Olive', target: 'Peter' },
+{ source: 'Peter', target: 'Quincy' },
+{ source: 'Quincy', target: 'Rachel' },
+{ source: 'Rachel', target: 'Steve' },
+{ source: 'Steve', target: 'Tina' },
+{ source: 'Tina', target: 'Uma' },
+{ source: 'Uma', target: 'Vince' },
+{ source: 'Vince', target: 'Wanda' },
+{ source: 'Wanda', target: 'Xander' },
+{ source: 'Xander', target: 'Yara' },
+{ source: 'Yara', target: 'Zach' },
+{ source: 'Zach', target: 'Alice' },
+        ]
+    };
+    ]);
+
+    // Function to update node appearance on hover
+    const handleNodeHover = node => {
+        setHoverNode(node);
+    };
+
+    // Update only the hovered node's appearance
+    useEffect(() => {
+        if (fgRef.current) {
+            fgRef.current.refresh();  // Redraw only when hover changes
+        }
+    }, [hoverNode]); // Dependency on hoverNode ensures minimal redraw
+
+    return (
+        <div>
+            <ForceGraph2D
+                ref={fgRef}
+                graphData={{ nodes, links: [] }}
+                onNodeHover={handleNodeHover}
+                nodeCanvasObject={(node, ctx, globalScale) => {
+                    const size = node === hoverNode ? 12 : 8;
+                    const color = node === hoverNode ? 'red' : node.color;
+                    ctx.beginPath();
+                    ctx.arc(node.x, node.y, size, 0, 2 * Math.PI, false);
+                    ctx.fillStyle = color;
+                    ctx.fill();
+                }}
+                nodeCanvasObjectMode={() => 'before'}  // Ensures custom node painting
+            />
+        </div>
+    );
+};
+
+export default GraphComponent;
